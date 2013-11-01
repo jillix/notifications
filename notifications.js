@@ -1,3 +1,4 @@
+M.wrap('github/lucaboieru/notifications/dev/notifications.js', function (require, module, exports) {
 var Bind = require('github/jillix/bind');
 var Events = require('github/jillix/events');
 
@@ -27,3 +28,5 @@ function showNotification (type, message) {
     }
 }
 
+
+return module; });
