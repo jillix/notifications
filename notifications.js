@@ -17,17 +17,32 @@ module.exports = function (config) {
     Events.call(self, config);
 };
 
-function showNotification (type, message) {
+function showNotification (notification) {
     
     var self = this;
 
     var target = $(self.config.popup.target);
+    var elem;
     
-    if (type === "ok") {
-        target.prepend($(self.config.popup.template.ok).clone().removeClass(self.config.popup.template.ok).removeClass("hided"));
-    } else {
-        target.prepend($(self.config.popup.template.error).clone().removeClass(self.config.popup.template.error).removeClass("hided"));
+    switch (notification.type) {
+    case "success":
+        elem = $(self.config.popup.template.ok).clone();
+        target.prepend(elem.removeClass(self.config.popup.template.ok.substring(1)).removeClass("hided").html(notification.message));
+        break;
+    case "error":
+        elem = $(self.config.popup.template.error).clone();
+        target.prepend(elem.removeClass(self.config.popup.template.error.substring(1)).removeClass("hided").html(notification.message));
+        break;
+    case "info":
+        elem = $(self.config.popup.template.error).clone();
+        target.prepend(elem.removeClass(self.config.popup.template.error.substring(1)).removeClass("hided").html(notification.message));
     }
+
+    setTimeout(function () {
+       elem.fadeOut(1000, function () {
+           elem.remove();
+       });
+    }, 5000);
 }
 
 
