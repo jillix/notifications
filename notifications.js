@@ -6,9 +6,9 @@ module.exports = function (config) {
 
     var self = this;
     self.config = config;
-    self.config.popup.target = self.config.popup.target || ".notification-popup-container";
-    self.config.popup.template.ok = self.config.popup.template || ".popup-template-ok";
-    self.config.popup.template.error = self.config.popup.template || ".popup-template-error";
+    self.config.popup.target = self.config.popup.target || ".notifications";
+    self.config.popup.template.ok = self.config.popup.template.ok || ".popup-template-ok";
+    self.config.popup.template.error = self.config.popup.template.error || ".popup-template-error";
     self.$ = {};
     self.config.binds = self.config.binds || [];
     
@@ -19,6 +19,8 @@ module.exports = function (config) {
 
 function showNotification (type, message) {
     
+    var self = this;
+
     var target = $(self.config.popup.target);
     
     if (type === "ok") {
