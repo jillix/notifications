@@ -11,11 +11,15 @@ module.exports = function (config) {
     self.config.options.nofade = self.config.options.nofade || false;
     self.config.popup.target = self.config.popup.target || ".notifications";
     self.config.popup.template = self.config.popup.template || ".popup-template";
+    self.config.popup.class = self.config.popup.class || ".message-popup";
+    self.config.popup.close = self.config.popup.close || ".close";
     self.$ = {};
     self.config.binds = self.config.binds || [];
     
     // close event
-    //$(document).on("click", , function ( ) {});
+    $(document).on("click", self.config.popup.class + " " + self.config.popup.close, function () {
+        $(this).closest(self.config.popup.class).remove();
+    });
     
     self.on("notifications.show", showNotification);
 
@@ -36,11 +40,11 @@ function showNotification (notification) {
         break;
     case "error":
         elem = $(self.config.popup.template).clone();
-        target.prepend(elem.addClass(notification.type).removeClass(self.config.popup.template.substring(1)).removeClass("hided").html(notification.message));
+        target.prepend(elem.addClass(notification.type).removeClass(self.config.popup.template.substring(1)).removeClass("hided").append(notification.message));
         break;
     case "info":
         elem = $(self.config.popup.template).clone();
-        target.prepend(elem.addClass(notification.type).removeClass(self.config.popup.template.substring(1)).removeClass("hided").html(notification.message));
+        target.prepend(elem.addClass(notification.type).removeClass(self.config.popup.template.substring(1)).removeClass("hided").append(notification.message));
     }
 
     setTimeout(function () {
