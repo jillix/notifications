@@ -7,8 +7,7 @@ module.exports = function (config) {
     var self = this;
     self.config = config;
     self.config.popup.target = self.config.popup.target || ".notifications";
-    self.config.popup.template.ok = self.config.popup.template.ok || ".popup-template-ok";
-    self.config.popup.template.error = self.config.popup.template.error || ".popup-template-error";
+    self.config.popup.template = self.config.popup.template || ".popup-template";
     self.$ = {};
     self.config.binds = self.config.binds || [];
     
@@ -26,23 +25,24 @@ function showNotification (notification) {
     
     switch (notification.type) {
     case "success":
-        elem = $(self.config.popup.template.ok).clone();
-        target.prepend(elem.removeClass(self.config.popup.template.ok.substring(1)).removeClass("hided").html(notification.message));
+        elem = $(self.config.popup.template).clone();
+        target.prepend(elem.addClass(notification.type).removeClass(self.config.popup.template.substring(1)).removeClass("hided").html(notification.message));
         break;
     case "error":
-        elem = $(self.config.popup.template.error).clone();
-        target.prepend(elem.removeClass(self.config.popup.template.error.substring(1)).removeClass("hided").html(notification.message));
+        elem = $(self.config.popup.template).clone();
+        target.prepend(elem.addClass(notification.type).removeClass(self.config.popup.template.substring(1)).removeClass("hided").html(notification.message));
         break;
     case "info":
-        elem = $(self.config.popup.template.error).clone();
-        target.prepend(elem.removeClass(self.config.popup.template.error.substring(1)).removeClass("hided").html(notification.message));
+        elem = $(self.config.popup.template).clone();
+        target.prepend(elem.addClass(notification.type).removeClass(self.config.popup.template.substring(1)).removeClass("hided").html(notification.message));
     }
 
     setTimeout(function () {
-       elem.fadeOut(1000, function () {
-           elem.remove();
-       });
-    }, 5000);
+        elem.fadeOut(1000, function () {
+            elem.remove();
+        });
+        // the amount of time the notification is displayed
+    }, notification.timeout * 1000 || self.config.options.timeout * 1000 || 5000);
 }
 
 
