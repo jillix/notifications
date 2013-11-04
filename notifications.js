@@ -6,10 +6,16 @@ module.exports = function (config) {
 
     var self = this;
     self.config = config;
+    self.config.options = self.config.options || {};
+    self.config.popup = self.config.popup || {};
+    self.config.options.nofade = self.config.options.nofade || false;
     self.config.popup.target = self.config.popup.target || ".notifications";
     self.config.popup.template = self.config.popup.template || ".popup-template";
     self.$ = {};
     self.config.binds = self.config.binds || [];
+    
+    // close event
+    //$(document).on("click", , function ( ) {});
     
     self.on("notifications.show", showNotification);
 
@@ -38,9 +44,13 @@ function showNotification (notification) {
     }
 
     setTimeout(function () {
-        elem.fadeOut(1000, function () {
+        if (self.config.options.nofade === false) {
+            elem.fadeOut(1000, function () {
+                elem.remove();
+            });
+        } else {
             elem.remove();
-        });
+        }
         // the amount of time the notification is displayed
     }, notification.timeout * 1000 || self.config.options.timeout * 1000 || 5000);
 }
