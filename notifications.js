@@ -33,19 +33,8 @@ function showNotification (notification) {
     var target = $(self.config.popup.target);
     var elem;
     
-    switch (notification.type) {
-    case "success":
-        elem = $(self.config.popup.template).clone();
-        target.prepend(elem.addClass(notification.type).removeClass(self.config.popup.template.substring(1)).removeClass("hided").html(notification.message));
-        break;
-    case "error":
-        elem = $(self.config.popup.template).clone();
-        target.prepend(elem.addClass(notification.type).removeClass(self.config.popup.template.substring(1)).removeClass("hided").append(notification.message));
-        break;
-    case "info":
-        elem = $(self.config.popup.template).clone();
-        target.prepend(elem.addClass(notification.type).removeClass(self.config.popup.template.substring(1)).removeClass("hided").append(notification.message));
-    }
+    elem = $(self.config.popup.template).clone();
+    target.prepend(elem.addClass(notification.type).removeClass(self.config.popup.template.substring(1)).removeClass("hided").append(notification.message));
 
     setTimeout(function () {
         if (self.config.options.nofade === false) {
