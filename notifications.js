@@ -1,4 +1,3 @@
-M.wrap('github/lucaboieru/notifications/dev/notifications.js', function (require, module, exports) {
 var Bind = require('github/jillix/bind');
 var Events = require('github/jillix/events');
 
@@ -15,24 +14,24 @@ module.exports = function (config) {
     self.config.popup.close = self.config.popup.close || ".close";
     self.$ = {};
     self.config.binds = self.config.binds || [];
-    
+
     // close event
     $(document).on("click", self.config.popup.class + " " + self.config.popup.close, function () {
         $(this).closest(self.config.popup.class).remove();
     });
-    
+
     self.on("notifications.show", showNotification);
 
     Events.call(self, config);
 };
 
 function showNotification (notification) {
-    
+
     var self = this;
 
     var target = $(self.config.popup.target);
     var elem;
-    
+
     elem = $(self.config.popup.template).clone();
     target.prepend(elem.addClass(notification.type).removeClass(self.config.popup.template.substring(1)).removeClass("hided").append(notification.message));
 
@@ -48,5 +47,3 @@ function showNotification (notification) {
     }, notification.timeout * 1000 || self.config.options.timeout * 1000 || 5000);
 }
 
-
-return module; });
