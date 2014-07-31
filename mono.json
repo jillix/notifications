@@ -4,7 +4,7 @@
     "name": "notifications",
     "dependencies": [
         "/notifications.js",
-        "github/jillix/bind/v0.2.1",
-        "github/jillix/events/v0.1.8"
+        "github/jillix/bind/v0.3.0",
+        "github/jillix/events/v0.3.0"
     ]
 }
